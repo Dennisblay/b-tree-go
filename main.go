@@ -53,3 +53,7 @@ func (BT *BinaryTree[T]) isEmpty() bool {
 	return BT.rootNode == nil
 
 }
+
+func (BT *BinaryTree[T]) BreadthFirst() {
+
+}
