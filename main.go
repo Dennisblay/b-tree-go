@@ -7,53 +7,78 @@ import (
 
 func main() {
 
-	bt := BinaryTree[int64]{rootNode: &Node[int64]{
-		data:  12,
-		left:  &Node[int64]{data: 24, left: &Node[int64]{data: 24}},
-		right: &Node[int64]{data: 36},
-	},
+	bt := BinaryTree[int64]{
+		rootNode: &TreeNode[int64]{
+			data: 12,
+			left: &TreeNode[int64]{
+				data: 24,
+				left: &TreeNode[int64]{data: 24}},
+			right: &TreeNode[int64]{
+				data:  36,
+				right: &TreeNode[int64]{data: 56}},
+		},
 	}
 	bt.TraversalPreorder(bt.rootNode)
+
+	//fmt.Println(q.dequeue().data)
+	//fmt.Println()
+	//bt.BreadthFirst()
 
 }
 
 type Ordered interface {
 	constraints.Ordered
 }
-type BinaryTree[T Ordered] struct {
-	rootNode *Node[T]
+type BinaryTree[T any] struct {
+	rootNode *TreeNode[T]
 	TreeSize int64
 }
 
-type Node[T Ordered] struct {
+type TreeNode[T any] struct {
 	data        T
-	left, right *Node[T]
+	left, right *TreeNode[T]
 }
 
-func (BT *BinaryTree[T]) TraversalPreorder(node *Node[T]) {
-	if BT.isEmpty() {
+func (bt *BinaryTree[T]) TraversalPreorder(node *TreeNode[T]) {
+	if bt.isEmpty() {
 		return
 	}
 
 	//fmt.Println(node.data) // Preorder
 
 	if node.left != nil {
-		BT.TraversalPreorder(node.left)
+		bt.TraversalPreorder(node.left)
 	}
 
 	fmt.Println(node.data) // Inorder
 	if node.right != nil {
-		BT.TraversalPreorder(node.right)
+		bt.TraversalPreorder(node.right)
 	}
 	//fmt.Println(node.data) // Preorder
 
 }
 
-func (BT *BinaryTree[T]) isEmpty() bool {
-	return BT.rootNode == nil
+func (bt *BinaryTree[T]) isEmpty() bool {
+	return bt.rootNode == nil
 
 }
 
-func (BT *BinaryTree[T]) BreadthFirst() {
+func (bt *BinaryTree[T]) BreadthFirst() {
+	if bt.isEmpty() {
+		return
+	}
 
+	q := Queue[T]{}
+	q.enqueue(bt.rootNode)
+	for !q.isEmpty() {
+		dequeued := q.dequeue()
+		fmt.Println(dequeued.data)
+		if dequeued.right != nil {
+			q.enqueue(dequeued.right)
+		}
+		if dequeued.left != nil {
+			q.enqueue(dequeued.left)
+		}
+
+	}
 }
