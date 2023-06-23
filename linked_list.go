@@ -4,13 +4,13 @@ import "fmt"
 
 //node represents a node in the linked list
 
-type node[T any] struct {
+type node[T Ordered] struct {
 	data *TreeNode[T]
 	next *node[T]
 }
 
 // LinkedList represents a linked list
-type LinkedList[T any] struct {
+type LinkedList[T Ordered] struct {
 	head *node[T]
 	size int
 }

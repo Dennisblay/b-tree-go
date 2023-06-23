@@ -11,7 +11,7 @@ func run() {
 
 }
 
-type Queue[T any] struct {
+type Queue[T Ordered] struct {
 	LinkedList[T]
 }
 
