@@ -8,20 +8,25 @@ import (
 func main() {
 
 	bt := BinaryTree[int64]{
-		rootNode: &TreeNode[int64]{
-			data: 12,
-			left: &TreeNode[int64]{
-				data: 24,
-				left: &TreeNode[int64]{data: 16}},
-			right: &TreeNode[int64]{
-				data:  36,
-				right: &TreeNode[int64]{data: 56}},
-		},
+		//rootNode: &TreeNode[int64]{
+		//	data: 12,
+		//	left: &TreeNode[int64]{
+		//		data: 24,
+		//		left: &TreeNode[int64]{data: 16}},
+		//	right: &TreeNode[int64]{
+		//		data:  36,
+		//		right: &TreeNode[int64]{data: 56}},
+		//},
 	}
 	//bt.TraversalPreorder(bt.rootNode)
 	//bt.BreadthFirstTraversal()
-	fmt.Println(bt.FindItem(36))
-	fmt.Println(bt.FindItem(12))
+	//fmt.Println(bt.FindItem(36))
+	//fmt.Println(bt.FindItem(12))
+	//bt.FindItem(56)
+	bt.AddItem(64)
+	bt.AddItem(61)
+	bt.AddItem(61)
+	bt.TraversalPreorder(bt.rootNode)
 	//fmt.Println(q.dequeue().data)
 	//fmt.Println()
 	//bt.BreadthFirstTraversal()
@@ -46,17 +51,17 @@ func (bt *BinaryTree[T]) TraversalPreorder(node *TreeNode[T]) {
 		return
 	}
 
-	//fmt.Println(node.data) // Preorder
+	fmt.Println(node.data) // Preorder
 
 	if node.left != nil {
 		bt.TraversalPreorder(node.left)
 	}
 
-	fmt.Println(node.data) // Inorder
+	//fmt.Println(node.data) // Inorder
 	if node.right != nil {
 		bt.TraversalPreorder(node.right)
 	}
-	//fmt.Println(node.data) // Preorder
+	//fmt.Println(node.data) // Postorder
 
 }
 
@@ -85,22 +90,50 @@ func (bt *BinaryTree[T]) BreadthFirstTraversal() {
 	}
 }
 
-func (bt *BinaryTree[T]) FindItem(target_data T) T {
+func (bt *BinaryTree[T]) FindItem(targetData T) bool {
 	// Compare the rootNode to the target node
-	var null T
-	if bt.isEmpty() {
-		return null
-	}
 	currentNode := bt.rootNode
 	for currentNode != nil {
-		if currentNode.data == target_data {
-			return target_data
+		if currentNode.data == targetData {
+			return true
 		}
-		if target_data < currentNode.left.data {
+		if targetData < currentNode.data {
 			currentNode = currentNode.left
 		} else {
 			currentNode = currentNode.right
 		}
 	}
-	return null
+	return false
+}
+
+func (bt *BinaryTree[T]) AddItem(data T) {
+	dataNode := &TreeNode[T]{data: data}
+	node := bt.rootNode
+	if bt.isEmpty() {
+		bt.rootNode = dataNode
+		return
+	}
+	for {
+		if node.data == data {
+			fmt.Println("Data already exists")
+			return
+		}
+		if data < node.data {
+			if node.left == nil {
+				node.left = dataNode
+				return
+			}
+			node = node.left
+		} else {
+
+			if data > node.data {
+				if node.right == nil {
+					node.right = dataNode
+					return
+				}
+				node = node.right
+			}
+		}
+	}
+
 }
