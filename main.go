@@ -8,15 +8,15 @@ import (
 func main() {
 
 	bt := BinaryTree[int64]{
-		//rootNode: &TreeNode[int64]{
-		//	data: 12,
-		//	left: &TreeNode[int64]{
-		//		data: 24,
-		//		left: &TreeNode[int64]{data: 16}},
-		//	right: &TreeNode[int64]{
-		//		data:  36,
-		//		right: &TreeNode[int64]{data: 56}},
-		//},
+		rootNode: &TreeNode[int64]{
+			data: 12,
+			left: &TreeNode[int64]{
+				data: 24,
+				left: &TreeNode[int64]{data: 16}},
+			right: &TreeNode[int64]{
+				data:  36,
+				right: &TreeNode[int64]{data: 56}},
+		},
 	}
 	//bt.TraversalPreorder(bt.rootNode)
 	//bt.BreadthFirstTraversal()
